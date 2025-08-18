@@ -1,0 +1,229 @@
+/* Register.css */
+
+/* Base Styles */
+.register-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+}
+
+.register-content {
+  padding: 2rem;
+  transition: margin-left 0.3s ease;
+}
+
+/* Header Styles */
+.user-header {
+  margin-bottom: 2rem;
+}
+
+.user-header h2 {
+  color: #2c3e50;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.user-header span {
+  color: #7f8c8d;
+  font-size: 1rem;
+}
+
+/* Card Styles */
+.card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+      margin-top: 33px;
+
+}
+
+.section-header {
+  border-bottom: 1px solid #eaecef;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.section-header h3, .section-header h4 {
+  color: #2c3e50;
+  margin: 0;
+}
+
+.section-header h3 {
+  font-size: 1.5rem;
+}
+
+.section-header h4 {
+  font-size: 1.25rem;
+}
+
+/* Input Group Styles */
+.input-group {
+  display: flex;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.input-group input, .input-group select {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus, .input-group select:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+/* Button Styles */
+.primary-btn, .register-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.primary-btn:hover, .register-btn:hover {
+  background-color: #2980b9;
+  transform: translateY(-1px);
+}
+
+.primary-btn:disabled, .register-btn:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.register-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+/* Table Styles */
+.details-table, .courses-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.details-table th, .courses-table th {
+  text-align: left;
+  padding: 0.75rem;
+  background-color: #f8f9fa;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.details-table td, .courses-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #eaecef;
+}
+
+.details-table tr:last-child td, .courses-table tr:last-child td {
+  border-bottom: none;
+}
+
+.courses-table th {
+  white-space: nowrap;
+}
+
+/* Table Container for Scroll */
+.table-container {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+/* Alert Messages */
+.alert {
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.alert.error {
+  background-color: #ffebee;
+  color: #c62828;
+  border-left: 4px solid #c62828;
+}
+
+.alert.success {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border-left: 4px solid #2e7d32;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .register-content {
+    margin-left: 0 !important;
+    padding: 1rem;
+  }
+  
+  .input-group {
+    flex-direction: column;
+  }
+  
+  .table-container {
+    width: 100%;
+    overflow-x: scroll;
+  }
+}
+
+/* Animation for Loading State */
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+.loading-state {
+  animation: pulse 1.5s infinite;
+}
+
+/* Hover Effects for Table Rows */
+.courses-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* Semester Section */
+.semester-section {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eaecef;
+}
+
+/* Button in the last column of courses table */
+.courses-table td:last-child {
+  text-align: center;
+}
+
+/* Status Badge for Registered Courses */
+.registered-badge {
+  background-color: #2ecc71;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+
+.register-btn.registered {
+  background-color: #2ecc71;
+  cursor: default;
+}
+
+.register-btn.registered:hover {
+  background-color: #2ecc71;
+  transform: none;
+}

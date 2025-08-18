@@ -1,0 +1,255 @@
+/* Teacher Course Management Styles */
+.teacher-dashboard {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.teacher-course-management {
+  flex: 1;
+  padding: 2rem;
+  background-color: #f5f7fa;
+}
+
+.teacher-course-header {
+  margin-bottom: 2rem;
+}
+
+.teacher-course-header h1 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.teacher-course-header h2 {
+  font-size: 1.5rem;
+  color: #3498db;
+  margin-bottom: 0.5rem;
+}
+
+.teacher-error-alert {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #fee2e2;
+  color: #dc2626;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.teacher-error-alert button {
+  background: none;
+  border: none;
+  color: #dc2626;
+  cursor: pointer;
+}
+
+/* Search Styles */
+.teacher-search-container {
+  margin-bottom: 2rem;
+}
+
+.teacher-search-box {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+}
+
+.teacher-search-icon {
+  color: #6b7280;
+  margin-right: 0.5rem;
+}
+
+.teacher-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0.5rem 0;
+  font-size: 1rem;
+  background: transparent;
+}
+
+.teacher-search-input:disabled {
+  background-color: #f3f4f6;
+  cursor: not-allowed;
+}
+
+/* Loading State */
+.teacher-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.teacher-spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 4px solid #e5e7eb;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Empty State */
+.teacher-empty-state {
+  text-align: center;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.teacher-refresh-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.teacher-refresh-btn:hover {
+  background-color: #2563eb;
+}
+
+/* Course List Styles */
+.teacher-course-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 1.5rem;
+}
+
+.teacher-course-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.teacher-course-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.teacher-course-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.teacher-course-title {
+  font-size: 1.25rem;
+  color: #2c3e50;
+  margin-bottom: 0.25rem;
+}
+
+.teacher-course-code {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.teacher-course-description {
+  color: #4b5563;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.teacher-course-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.teacher-course-detail {
+  display: flex;
+  align-items: center;
+  color: #4b5563;
+  font-size: 0.875rem;
+}
+
+.teacher-course-detail svg {
+  margin-right: 0.5rem;
+  color: #6b7280;
+}
+
+.teacher-course-detail strong {
+  color: #2c3e50;
+}
+
+.teacher-course-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: none;
+  margin-top: auto;
+}
+
+.teacher-course-department {
+  background-color: #e6f4ea;
+    color: #419127;
+
+  padding: 0.25rem 0.5rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.teacher-manage-btn {
+  padding: 0.5rem 1rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.teacher-manage-btn:hover {
+  background-color: #2563eb;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .teacher-course-management {
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  .teacher-course-list {
+    grid-template-columns: 1fr;
+  }
+
+  .teacher-course-card {
+    width: auto !important;
+    height: auto !important;
+  }
+}

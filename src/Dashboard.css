@@ -1,0 +1,124 @@
+/* Dashboard.css */
+.dashboard-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f7fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dashboard-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo-image {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1rem;
+}
+
+.header-title {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 2rem;
+}
+
+.header-badge {
+  background-color: #3498db;
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.hero-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.hero-section h2 {
+  font-size: 2.2rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.highlight {
+  color: #3498db;
+}
+
+.hero-description {
+  color: #7f8c8d;
+  max-width: 600px;
+  margin-bottom: 2rem;
+}
+
+.role-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  width: 300px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  margin: 0.5rem;
+}
+
+.role-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.role-icon {
+  font-size: 2rem;
+  margin-right: 1rem;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.role-info h3 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.2rem;
+}
+
+.role-info p {
+  margin: 0.5rem 0 0;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.dashboard-footer {
+  text-align: center;
+  padding: 1.5rem;
+  background-color: #2c3e50;
+  color: white;
+}
+
+.dashboard-footer h3 {
+  margin: 0 0 0.5rem;
+}
+
+.dashboard-footer p {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}

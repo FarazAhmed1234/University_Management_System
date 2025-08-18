@@ -1,0 +1,431 @@
+.teacher-dashboard {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+}
+
+.teacher-attendance-management {
+  flex: 1;
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.header p {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Add these styles to your existing CSS file */
+
+.report-options-dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 10;
+  width: 250px;
+}
+
+.report-type-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.report-type-selector label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.month-selector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.month-selector select {
+  flex: 1;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.generate-report-btn {
+  width: 100%;
+  padding: 8px;
+  background: #2980b9;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.generate-report-btn:hover {
+  background: #3498db;
+}
+
+.download-report-container {
+  position: relative;
+  display: inline-block;
+}
+
+.download-report-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #27ae60;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.download-report-btn:hover {
+  background: #2ecc71;
+}
+.error-alert {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 10px 15px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.error-alert button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #c62828;
+}
+
+.course-selection {
+  margin-bottom: 30px;
+}
+
+.course-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.course-card {
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.course-card.active {
+  border-left: 4px solid #3f51b5;
+  background-color: #f0f2ff;
+}
+
+.course-card h3 {
+  margin: 0 0 5px 0;
+  font-size: 18px;
+  color: #3f51b5;
+}
+
+.course-name {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #555;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.course-stats {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  font-size: 13px;
+  color: #555;
+  margin-top: 10px;
+}
+
+.course-stats div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.attendance-details {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.course-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.course-info-header h2 {
+  margin: 0 0 5px 0;
+  font-size: 20px;
+}
+
+.course-info-header p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.date-section {
+  text-align: right;
+}
+
+.current-date {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.create-session-btn {
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.create-session-btn:hover {
+  background-color: #303f9f;
+}
+
+.attendance-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  padding: 8px 12px;
+  border-radius: 4px;
+  width: 300px;
+}
+
+.search-box input {
+  border: none;
+  background: transparent;
+  margin-left: 8px;
+  width: 100%;
+  outline: none;
+}
+/* Existing styles... */
+
+.save-attendance-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-left: auto;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+}
+
+.save-attendance-btn:hover {
+  background-color: #3e8e41;
+}
+
+.save-attendance-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.success-alert {
+  background-color: #dff0d8;
+  color: #3c763d;
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.attendance-stats {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.attendance-stats span {
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.stat-present {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.stat-absent {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.stat-late {
+  background-color: #fff8e1;
+  color: #f57f17;
+}
+
+/* Add these to your existing status-badge styles */
+.status-badge.present {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-badge.absent {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.status-badge.late {
+  background-color: #fff8e1;
+  color: #f57f17;
+}
+.status-filter select {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background: white;
+}
+
+.attendance-table-container {
+  overflow-x: auto;
+}
+
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.attendance-table th {
+  background: #f5f5f5;
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 500;
+  color: #555;
+  font-size: 14px;
+}
+
+.attendance-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-badge.present {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-badge.absent {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.status-badge.late {
+  background-color: #fff8e1;
+  color: #f57f17;
+}
+
+.status-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.status-actions button {
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background: white;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.status-actions button.active {
+  background-color: #3f51b5;
+  color: white;
+  border-color: #3f51b5;
+}
+
+.no-records {
+  text-align: center;
+  color: #666;
+  padding: 20px;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #3f51b5;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
