@@ -98,95 +98,105 @@ const TeacherTimetable = () => {
             classes: grouped[day]
         }));
     };
-const downloadTimetablePDF = () => {
+ const downloadTimetablePDF = () => {
     const doc = new jsPDF({
-        orientation: 'portrait',
-        unit: 'mm'
+        orientation: 'landscape',
+        unit: 'mm',
+        format: 'a4'
     });
 
-    // Color scheme
-    const primaryColor = '#2c3e50';  // Dark blue-gray for headings
-    const secondaryColor = '#7f8c8d';  // Gray for secondary text
-    const accentColor = '#3498db';  // Blue for accents
-    const lightGray = '#f5f5f5';  // For alternate rows
+    // Colors
+    const primaryColor = '#2c3e50';
+    const secondaryColor = '#7f8c8d';
+    const lightGray = '#f5f5f5';
 
-    // Add header
-    doc.setFontSize(18);
-    doc.setTextColor(primaryColor);
+    // Header
+    doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
-    doc.text('TEACHER TIMETABLE', 105, 20, { align: 'center' });
+    doc.setTextColor(primaryColor);
+    doc.text('TEACHER TIMETABLE', 148, 15, { align: 'center' });
 
-    // School/University name (optional)
-    doc.setFontSize(12);
-    doc.text('EduConnect University', 105, 28, { align: 'center' });
-
-    // Teacher information
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(secondaryColor);
-    
-    doc.text(`Teacher: ${userName}`, 20, 38);
-    doc.text(`ID: ${teacherId}`, 20, 43);
-    
+    doc.text('EduConnect University', 148, 22, { align: 'center' });
+
+    // Teacher info
+    doc.setTextColor(primaryColor);
+    doc.text(`Teacher: ${userName}`, 15, 32);
+    doc.text(`ID: ${teacherId}`, 15, 37);
+
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
     const today = new Date().toLocaleDateString('en-US', options);
-    doc.text(`Generated: ${today}`, 160, 43, { align: 'right' });
+    doc.text(`Generated: ${today}`, 280, 37, { align: 'right' });
 
-    // Prepare data
+    // Group timetable data by day
     const daysData = groupByDay(timetable.data);
-    const tableData = [];
 
+    // Define time periods (9 AM to 5 PM)
+    const timePeriods = [
+        { period: 'Period 1', start: '09:00', end: '10:30' },
+        { period: 'Period 2', start: '10:30', end: '12:00' },
+        { period: 'Period 3', start: '12:00', end: '13:30' },
+        { period: 'Period 4', start: '13:00', end: '14:30' },
+        { period: 'Period 5', start: '15:00', end: '16:30' },
+    ];
+
+    // Prepare table data
+    const tableData = [];
+    
+    // Add header row
+    const headerRow = ['Day', ...timePeriods.map(p => `${p.period}\n${p.start}-${p.end}`)];
+    tableData.push(headerRow);
+
+    // Add data rows for each day
     daysData.forEach(dayData => {
-        if (dayData.classes.length > 0) {
-            dayData.classes.forEach(classItem => {
-                tableData.push([
-                    dayData.day,
-                    classItem.course_code || '-',
-                    classItem.course_name || '-',
-                    formatTime(classItem.start_time) + ' - ' + formatTime(classItem.end_time),
-                    classItem.venue || '-',
-                    classItem.block || '-'
-                ]);
+        const row = [dayData.day];
+        
+        timePeriods.forEach(timePeriod => {
+            // Find if there's a class in this time period
+            const classItem = dayData.classes.find(c => {
+                const classStart = c.start_time.substring(0, 5); // Get HH:MM part
+                return classStart === timePeriod.start;
             });
-        } else {
-            tableData.push([dayData.day, 'No classes scheduled', '', '', '', '']);
-        }
+            
+            if (classItem) {
+                row.push(
+                    `${classItem.course_name || classItem.course_code} \n ${classItem.venue || ''} (Block:${classItem.block || ''})`
+                );
+            } else {
+                row.push('-');
+            }
+        });
+        
+        tableData.push(row);
     });
 
-    // Add the table
+    // Create the table
     doc.autoTable({
-        startY: 50,
-        head: [['Day', 'Course Code', 'Course Name', 'Time', 'Venue', 'Block']],
-        body: tableData,
+        startY: 45,
+        head: [tableData[0]],
+        body: tableData.slice(1),
         theme: 'grid',
+        styles: {
+            fontSize: 8,
+            valign: 'middle',
+            halign: 'center',
+            cellPadding: 2,
+            minCellHeight: 10
+        },
         headStyles: {
             fillColor: primaryColor,
             textColor: 255,
-            fontStyle: 'bold',
-        },
-        bodyStyles: {
-            textColor: primaryColor,
-            fontSize: 9
+            fontStyle: 'bold'
         },
         alternateRowStyles: {
             fillColor: lightGray
         },
-        styles: {
-            cellPadding: 4,
-            fontSize: 8,
-            valign: 'middle',
-            lineColor: 200,
-            lineWidth: 0.2
-        },
         columnStyles: {
-            0: { cellWidth: 35, fontStyle: 'bold' },
-            1: { cellWidth: 25 },
-            2: { cellWidth: 45 },
-            3: { cellWidth: 30 },
-            4: { cellWidth: 30 },
-            5: { cellWidth: 15 }
-        },
-        margin: { left: 15, right: 15 }
+            0: { cellWidth: 20, fontStyle: 'bold' } // Day column
+            // Other columns will auto-size
+        }
     });
 
     // Footer
@@ -195,14 +205,13 @@ const downloadTimetablePDF = () => {
         doc.setPage(i);
         doc.setFontSize(8);
         doc.setTextColor(secondaryColor);
-        doc.text('Official Document - Do not modify', 105, 287, { align: 'center' });
-        doc.text(`Page ${i} of ${pageCount}`, 190, 287, { align: 'right' });
+        doc.text('Official Document - Do not modify', 148, 200, { align: 'center' });
+        doc.text(`Page ${i} of ${pageCount}`, 285, 200, { align: 'right' });
     }
 
-    // Save PDF
+    // Save file
     doc.save(`${userName.replace(/\s+/g, '_')}_Timetable_${today.replace(/\s+/g, '_')}.pdf`);
 };
-
     if (timetable.loading) {
         return (
             <div className="timetable-container-with-sidebar">

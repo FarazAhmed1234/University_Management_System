@@ -22,7 +22,13 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  cursor: pointer; /* makes it look clickable */
 }
+
+.portal-heading:hover {
+  color: #457b9d; /* optional: add a hover color effect */
+}
+
 
 .top-right-button {
   position: absolute;

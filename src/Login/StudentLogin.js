@@ -44,7 +44,7 @@ const StudentLogin = ({ onBack, onLogin }) => {
   return (
     <>
       <div className="student-login-container">
-        <h1 className="portal-heading">🎓 EduConnect Portal</h1>
+        <h1 className="portal-heading"  onClick={onBack}>🎓 EduConnect Portal</h1>
         <button className="top-right-button" onClick={onBack}>Back to Home</button>
 
         <div className="student-login-card">

@@ -45,7 +45,7 @@ const AdminLogin = ({ onBack, onLogin }) => {
   return (
     <>
       <div className="admin-login-container">
-        <h1 className="portal-heading">🎓 EduConnect Portal</h1>
+        <h1 className="portal-heading"  onClick={onBack}>🎓 EduConnect Portal</h1>
         <button className="top-right-button" onClick={onBack}>Back to Home</button>
 
         <div className="admin-login-card">

@@ -98,110 +98,123 @@ const StudentTimetable = () => {
         }));
     };
 
- const downloadTimetablePDF = () => {
-    const doc = new jsPDF({
-        orientation: 'portrait',
-        unit: 'mm'
-    });
+    const downloadTimetablePDF = () => {
+        const doc = new jsPDF({
+            orientation: 'landscape',
+            unit: 'mm',
+            format: 'a4'
+        });
 
-    // Color scheme
-    const primaryColor = '#2c3e50';  // Dark blue-gray for headings
-    const secondaryColor = '#7f8c8d';  // Gray for secondary text
-    const accentColor = '#3498db';  // Blue for accents
-    const lightGray = '#f5f5f5';  // For alternate rows
+        // Colors
+        const primaryColor = '#2c3e50';
+        const secondaryColor = '#7f8c8d';
+        const lightGray = '#f5f5f5';
 
-    // Add header
-    doc.setFontSize(18);
-    doc.setTextColor(primaryColor);
-    doc.setFont('helvetica', 'bold');
-    doc.text('ACADEMIC TIMETABLE', 105, 20, { align: 'center' });
+        // Header
+        doc.setFontSize(16);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(primaryColor);
+        doc.text('ACADEMIC TIMETABLE', 148, 15, { align: 'center' });
 
-    // School/University name (optional)
-    doc.setFontSize(12);
-    doc.text('EduConnect University', 105, 28, { align: 'center' });
-
-    // Student information
-    doc.setFontSize(10);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(secondaryColor);
-    
-    doc.text(`Student: ${userName}`, 20, 38);
-    doc.text(`ID: ${studentId}`, 20, 43);
-    
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    const today = new Date().toLocaleDateString('en-US', options);
-    doc.text(`Generated: ${today}`, 160, 43, { align: 'right' });
-
-    // Prepare data
-    const daysData = groupByDay(timetable.data);
-    const tableData = [];
-
-    daysData.forEach(dayData => {
-        if (dayData.classes.length > 0) {
-            dayData.classes.forEach(classItem => {
-                tableData.push([
-                    dayData.day,
-                    classItem.course_name || classItem.course_code,
-                    formatTime(classItem.start_time) + ' - ' + formatTime(classItem.end_time),
-                    classItem.venue,
-                    classItem.block || '-'
-                ]);
-            });
-        } else {
-            tableData.push([dayData.day, 'No classes scheduled', '', '', '']);
-        }
-    });
-
-    // Add the table
-    doc.autoTable({
-        startY: 50,
-        head: [['Day', 'Course', 'Time', 'Venue', 'Block']],
-        body: tableData,
-        theme: 'grid',
-        headStyles: {
-            fillColor: primaryColor,
-            textColor: 255,
-            fontStyle: 'bold',
-        
-        },
-        bodyStyles: {
-            textColor: primaryColor,
-            fontSize: 9
-        },
-        alternateRowStyles: {
-            fillColor: lightGray
-        },
-        styles: {
-            cellPadding: 4,
-            fontSize: 6,
-            valign: 'middle',
-            lineColor: 200,
-            lineWidth: 0.2
-        },
-        columnStyles: {
-            0: { cellWidth: 35, fontStyle: 'bold' },
-            1: { cellWidth: 55 },
-            2: { cellWidth: 30 },
-            3: { cellWidth: 40 },
-            4: { cellWidth: 20 }
-        },
-        margin: { left: 15, right: 15 }
-    });
-
-    // Footer
-    const pageCount = doc.internal.getNumberOfPages();
-    for (let i = 1; i <= pageCount; i++) {
-        doc.setPage(i);
-        doc.setFontSize(8);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
         doc.setTextColor(secondaryColor);
-        doc.text('Official Document - Do not modify', 105, 287, { align: 'center' });
-        doc.text(`Page ${i} of ${pageCount}`, 190, 287, { align: 'right' });
-    }
+        doc.text('EduConnect University', 148, 22, { align: 'center' });
 
-    // Save PDF
-    doc.save(`${userName.replace(/\s+/g, '_')}_Timetable_${today.replace(/\s+/g, '_')}.pdf`);
-};
+        // Student info
+        doc.setTextColor(primaryColor);
+        doc.text(`Student: ${userName}`, 15, 32);
+        doc.text(`ID: ${studentId}`, 15, 37);
 
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        const today = new Date().toLocaleDateString('en-US', options);
+        doc.text(`Generated: ${today}`, 280, 37, { align: 'right' });
+
+        // Group timetable data by day
+        const daysData = groupByDay(timetable.data);
+
+        // Define time periods (9 AM to 5 PM)
+        const timePeriods = [
+            { period: 'Period 1', start: '09:00', end: '10:30' },
+            { period: 'Period 2', start: '10:30', end: '12:00' },
+            { period: 'Period 3', start: '12:00', end: '13:30' },
+            { period: 'Period 4', start: '13:00', end: '14:30' },
+            { period: 'Period 5', start: '15:00', end: '16:30' },
+        
+        ];
+
+        // Prepare table data
+        const tableData = [];
+        
+        // Add header row
+        const headerRow = ['Day', ...timePeriods.map(p => `${p.period}\n${p.start}-${p.end}`)];
+        tableData.push(headerRow);
+
+        // Add data rows for each day
+        daysData.forEach(dayData => {
+            const row = [dayData.day];
+            
+            timePeriods.forEach(timePeriod => {
+                // Find if there's a class in this time period
+                const classItem = dayData.classes.find(c => {
+                    const classStart = c.start_time.substring(0, 5); // Get HH:MM part
+                    return classStart === timePeriod.start;
+                });
+                
+                if (classItem) {
+                    row.push(
+                        `${classItem.course_name || classItem.course_code} \n ${classItem.venue || ''} (Block:${classItem.block || ''}) \n ${classItem.lecturer || ''}`
+
+                    );
+                
+                } else {
+                    row.push('-');
+                }
+            });
+            
+            tableData.push(row);
+        });
+
+        // Create the table
+        doc.autoTable({
+            startY: 45,
+            head: [tableData[0]],
+            body: tableData.slice(1),
+            theme: 'grid',
+            styles: {
+                fontSize: 8,
+                valign: 'middle',
+                halign: 'center',
+                cellPadding: 2,
+                minCellHeight: 10
+            },
+            headStyles: {
+                fillColor: primaryColor,
+                textColor: 255,
+                fontStyle: 'bold'
+            },
+            alternateRowStyles: {
+                fillColor: lightGray
+            },
+            columnStyles: {
+                0: { cellWidth: 20, fontStyle: 'bold' } // Day column
+                // Other columns will auto-size
+            }
+        });
+
+        // Footer
+        const pageCount = doc.internal.getNumberOfPages();
+        for (let i = 1; i <= pageCount; i++) {
+            doc.setPage(i);
+            doc.setFontSize(8);
+            doc.setTextColor(secondaryColor);
+            doc.text('Official Document - Do not modify', 148, 200, { align: 'center' });
+            doc.text(`Page ${i} of ${pageCount}`, 285, 200, { align: 'right' });
+        }
+
+        // Save file
+        doc.save(`${userName.replace(/\s+/g, '_')}_Timetable_${today.replace(/\s+/g, '_')}.pdf`);
+    };
 
     if (timetable.loading) {
         return (

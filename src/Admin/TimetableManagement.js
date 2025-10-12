@@ -10,18 +10,15 @@ const TimetableManagement = ({ userName, onLogout }) => {
     id: '',
     course_code: '',
     day: 'Monday',
-    start_time: '09:00',
-    end_time: '10:30',
+    start_time: '',
+    end_time: '',
     venue: '',
     lecturer: '',
     teacher_id: '',
     block: 'A'
   });
   const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState({
-    courses: true,
-    timetable: true
-  });
+  const [loading, setLoading] = useState({ courses: true, timetable: true });
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -29,6 +26,15 @@ const TimetableManagement = ({ userName, onLogout }) => {
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  // ✅ Fixed time slots
+  const timeSlots = [
+    { start: "09:00", end: "10:30" },
+    { start: "10:30", end: "12:00" },
+    { start: "12:00", end: "13:30" },
+    { start: "13:30", end: "15:00" },
+    { start: "15:00", end: "16:30" }
+  ];
 
   // Fetch initial data
   useEffect(() => {
@@ -49,12 +55,9 @@ const TimetableManagement = ({ userName, onLogout }) => {
     try {
       setLoading(prev => ({ ...prev, courses: true }));
       const response = await fetch('http://localhost:8080/educonnect-backend/fetch_courses.php');
-      
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      
       const data = await response.json();
       if (!data.success) throw new Error(data.message || 'Failed to fetch courses');
-      
       setCourses(data.data);
     } catch (error) {
       console.error('Fetch courses error:', error);
@@ -68,12 +71,9 @@ const TimetableManagement = ({ userName, onLogout }) => {
     try {
       setLoading(prev => ({ ...prev, timetable: true }));
       const response = await fetch('http://localhost:8080/educonnect-backend/get_timetable.php');
-      
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      
       const data = await response.json();
       if (!data.success) throw new Error(data.message || 'Failed to fetch timetable');
-      
       setEntries(data.data);
     } catch (error) {
       console.error('Fetch timetable error:', error);
@@ -87,7 +87,6 @@ const TimetableManagement = ({ userName, onLogout }) => {
     const courseCode = e.target.value;
     const selected = courses.find(course => course.code === courseCode);
     setSelectedCourse(selected);
-    
     setFormData({
       ...formData,
       course_code: courseCode,
@@ -104,43 +103,33 @@ const TimetableManagement = ({ userName, onLogout }) => {
   const validateForm = () => {
     const requiredFields = ['course_code', 'day', 'start_time', 'end_time', 'venue', 'lecturer', 'teacher_id', 'block'];
     const missingFields = requiredFields.filter(field => !formData[field]);
-    
     if (missingFields.length > 0) {
       setError(`Missing required fields: ${missingFields.join(', ')}`);
       return false;
     }
-    
-    if (formData.start_time >= formData.end_time) {
-      setError('End time must be after start time');
-      return false;
-    }
-    
     return true;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-    
     if (!validateForm()) return;
-    
+
     try {
       const endpoint = isEditing 
         ? 'http://localhost:8080/educonnect-backend/update_timetable.php'
         : 'http://localhost:8080/educonnect-backend/add_timetable.php';
-      
+      const method = isEditing ? 'PUT' : 'POST';
+
       const response = await fetch(endpoint, {
-        method: isEditing ? 'PUT' : 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method,
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(formData)
       });
-      
+
       const data = await response.json();
-      
-      if (!response.ok || !data.success) {
-        throw new Error(data.message || `Failed to ${isEditing ? 'update' : 'add'} timetable entry`);
-      }
-      
+      if (!data.success) throw new Error(data.message || 'Failed to save timetable entry');
+
       setSuccessMessage(`Timetable entry ${isEditing ? 'updated' : 'added'} successfully!`);
       await fetchTimetableEntries();
       resetForm();
@@ -153,20 +142,14 @@ const TimetableManagement = ({ userName, onLogout }) => {
 
   const handleDeleteEntry = async (id) => {
     if (!window.confirm('Are you sure you want to delete this timetable entry?')) return;
-    
     try {
       const response = await fetch('http://localhost:8080/educonnect-backend/delete_timetable.php', {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({ id })
       });
-      
       const data = await response.json();
-      
-      if (!response.ok || !data.success) {
-        throw new Error(data.message || 'Failed to delete timetable entry');
-      }
-      
+      if (!data.success) throw new Error(data.message || 'Failed to delete timetable entry');
       setSuccessMessage('Timetable entry deleted successfully!');
       await fetchTimetableEntries();
     } catch (error) {
@@ -180,8 +163,8 @@ const TimetableManagement = ({ userName, onLogout }) => {
       id: '',
       course_code: '',
       day: 'Monday',
-      start_time: '09:00',
-      end_time: '10:30',
+      start_time: '',
+      end_time: '',
       venue: '',
       lecturer: '',
       teacher_id: '',
@@ -217,80 +200,66 @@ const TimetableManagement = ({ userName, onLogout }) => {
   return (
     <div className="timetable-container">
       <SidebarNavigation activeItem={activeItem} userName={userName} onLogout={onLogout} />
-
       <div className="timetable-main-content">
+        
+        {/* Header */}
         <div className="timetable-header-section">
           <h1 className="timetable-header">Timetable Management</h1>
           <p className="timetable-subtitle">Manage class schedules and room assignments</p>
-          
           <div className="search-container">
-            <div className="search-input-wrapper">
-              <Search size={18} className="search-icon" />
-              <input
-                type="text"
-                placeholder="Search timetable..."
-                value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
-                disabled={isLoading}
-               style={{marginLeft:"20px"}}/>
-            </div>
+            <input
+              type="text"
+              placeholder="Search timetable..."
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+              disabled={isLoading}
+              className="search-input"
+            />
           </div>
-
-          <div className="divider-line"></div>
-
           <div className="subheader-section">
             <button 
-              className="timetable-add-button"
+              className="timetable-add-button"  
+              style={{color: "black"}}
               onClick={() => {
                 resetForm();
                 setShowModal(true);
                 setError(null);
                 setSuccessMessage('');
               }}
-             style={{marginTop: "-126px" , marginLeft: "824px"}}>
-              <Plus size={16} className="button-icon" />
-              Add New Schedule
+            >
+              <Plus size={16} className="button-icon" /> Add New Schedule
             </button>
           </div>
         </div>
 
+        {/* Errors and Success */}
         {error && (
           <div className="timetable-error">
             <p>{error}</p>
-            <button onClick={() => setError(null)} className="error-close">
-              <X size={18} />
-            </button>
+            <button onClick={() => setError(null)} className="error-close"><X size={18} /></button>
           </div>
         )}
-        
         {successMessage && (
           <div className="timetable-success">
             <p>{successMessage}</p>
-            <button onClick={() => setSuccessMessage('')} className="success-close">
-              <X size={18} />
-            </button>
+            <button onClick={() => setSuccessMessage('')} className="success-close"><X size={18} /></button>
           </div>
         )}
 
+        {/* Timetable entries */}
         <div className="timetable-entries">
           {filteredEntries.length === 0 ? (
-            <p className="timetable-empty">No timetable entries found{searchTerm ? ` matching "${searchTerm}"` : ''}.</p>
+            <p className="timetable-empty">No timetable entries found.</p>
           ) : (
-            <div className="timetable-grid" style={{marginLeft: "340px" ,gap: "20px", width: "518px" , display:"inline-grid"}}>
+            <div className="timetable-grid">
               {filteredEntries.map((entry) => (
-                <div key={entry.id} className="timetable-card" style={{marginLeft:"-250px", marginRight:"53px"}}>
+                <div key={entry.id} className="timetable-card">
                   <div className="card-body">
                     <h3 className="card-title">{entry.course_name || entry.course_code}</h3>
-                    <hr /> <br />
-                    <div className="card-info">
-                      <p className="card-lecturer">{entry.lecturer || 'Not assigned'}</p>
-                      <p className="card-day">{entry.day} (Block {entry.block})</p>
-                    </div>
-                    <div className="card-time-info">
-                      <p className="card-time">{entry.start_time} - {entry.end_time}</p>
-                      <p className="card-venue">{entry.venue || 'No venue specified'}</p>
-                    </div>
-                    
+                    <p className="card-lecturer">{entry.lecturer}</p>
+                    <p>{entry.day}</p>
+                    <p>{entry.start_time} - {entry.end_time}</p>
+                    <p>Block {entry.block} ({entry.venue})</p>
                   </div>
                   <div className="card-actions">
                     <button 
@@ -312,13 +281,13 @@ const TimetableManagement = ({ userName, onLogout }) => {
                         setShowModal(true);
                       }}
                     >
-                      <Edit size={14} className="action-icon" /> Edit
+                      <Edit size={14} /> Edit
                     </button>
                     <button 
                       className="card-delete"
                       onClick={() => handleDeleteEntry(entry.id)}
                     >
-                      <Trash2 size={14} className="action-icon" /> Delete
+                      <Trash2 size={14} /> Delete
                     </button>
                   </div>
                 </div>
@@ -327,27 +296,23 @@ const TimetableManagement = ({ userName, onLogout }) => {
           )}
         </div>
 
+        {/* Modal */}
         {showModal && (
           <div className="timetable-modal-overlay">
             <div className="timetable-modal">
               <div className="modal-header">
                 <h2>{isEditing ? 'Edit Schedule' : 'Add New Schedule'}</h2>
-                <button 
-                  className="modal-close" 
-                  onClick={() => {
-                    setShowModal(false);
-                    resetForm();
-                  }}
-                >
+                <button className="modal-close" onClick={() => { setShowModal(false); resetForm(); }}>
                   <X size={20} />
                 </button>
               </div>
-              
+
               <form className="timetable-form" onSubmit={handleSubmit}>
+                
+                {/* Course */}
                 <div className="form-group">
-                  <label htmlFor="course-select">Course *</label>
+                  <label>Course *</label>
                   <select
-                    id="course-select"
                     name="course_code"
                     value={formData.course_code}
                     onChange={handleCourseChange}
@@ -362,36 +327,22 @@ const TimetableManagement = ({ userName, onLogout }) => {
                   </select>
                 </div>
 
+                {/* Lecturer */}
                 <div className="form-group">
-                  <label htmlFor="lecturer-input">Lecturer *</label>
-                  <input
-                    id="lecturer-input"
-                    name="lecturer"
-                    type="text"
-                    value={formData.lecturer}
-                    onChange={handleInputChange}
-                    required
-                    readOnly={!!selectedCourse}
-                  />
+                  <label>Lecturer *</label>
+                  <input type="text" name="lecturer" value={formData.lecturer} readOnly />
                 </div>
 
+                {/* Teacher ID */}
                 <div className="form-group">
-                  <label htmlFor="teacher-id-input">Teacher ID *</label>
-                  <input
-                    id="teacher-id-input"
-                    name="teacher_id"
-                    type="text"
-                    value={formData.teacher_id}
-                    onChange={handleInputChange}
-                    required
-                    readOnly={!!selectedCourse}
-                  />
+                  <label>Teacher ID *</label>
+                  <input type="text" name="teacher_id" value={formData.teacher_id} readOnly />
                 </div>
 
+                {/* Day */}
                 <div className="form-group">
-                  <label htmlFor="day-select">Day *</label>
+                  <label>Day *</label>
                   <select
-                    id="day-select"
                     name="day"
                     value={formData.day}
                     onChange={handleInputChange}
@@ -403,35 +354,31 @@ const TimetableManagement = ({ userName, onLogout }) => {
                   </select>
                 </div>
 
-                <div className="time-inputs">
-                  <div className="form-group">
-                    <label htmlFor="start-time">Start Time *</label>
-                    <input
-                      id="start-time"
-                      name="start_time"
-                      type="time"
-                      value={formData.start_time}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="end-time">End Time *</label>
-                    <input
-                      id="end-time"
-                      name="end_time"
-                      type="time"
-                      value={formData.end_time}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
+                {/* Time slot dropdown ✅ */}
+                <div className="form-group">
+                  <label>Time Slot *</label>
+                  <select
+                    name="time_slot"
+                    value={formData.start_time && formData.end_time ? `${formData.start_time}-${formData.end_time}` : ""}
+                    onChange={(e) => {
+                      const [start, end] = e.target.value.split("-");
+                      setFormData(prev => ({ ...prev, start_time: start, end_time: end }));
+                    }}
+                    required
+                  >
+                    <option value="">Select Time Slot</option>
+                    {timeSlots.map((slot, idx) => (
+                      <option key={idx} value={`${slot.start}-${slot.end}`}>
+                        {slot.start} - {slot.end}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
+                {/* Block */}
                 <div className="form-group">
-                  <label htmlFor="block-select">Block *</label>
+                  <label>Block *</label>
                   <select
-                    id="block-select"
                     name="block"
                     value={formData.block}
                     onChange={handleInputChange}
@@ -443,38 +390,25 @@ const TimetableManagement = ({ userName, onLogout }) => {
                   </select>
                 </div>
 
+                {/* Venue */}
                 <div className="form-group">
-                  <label htmlFor="venue-input">Class *</label>
-                  <input
-                    id="venue-input"
-                    name="venue"
-                    type="text"
-                    value={formData.venue}
-                    onChange={handleInputChange}
-                    required
-                  />
+                  <label>Class *</label>
+                  <input type="text" name="venue" value={formData.venue} onChange={handleInputChange} required />
                 </div>
 
                 <div className="form-buttons">
-                  <button 
-                    type="button" 
-                    className="form-cancel" 
-                    onClick={() => {
-                      setShowModal(false);
-                      resetForm();
-                    }}
-                  >
+                  <button type="button" className="form-cancel" onClick={() => { setShowModal(false); resetForm(); }}>
                     Cancel
                   </button>
                   <button type="submit" className="form-submit">
-                    <Check size={16} className="button-icon" />
-                    {isEditing ? 'Update Schedule' : 'Add Schedule'}
+                    <Check size={16} /> {isEditing ? 'Update Schedule' : 'Add Schedule'}
                   </button>
                 </div>
               </form>
             </div>
           </div>
         )}
+
       </div>
     </div>
   );
