@@ -17,7 +17,7 @@ const AdminDashboard = ({ userName, onLogout }) => {
   useEffect(() => {
     const fetchCounts = async () => {
       try {
-        const response = await fetch("http://localhost:8080/educonnect-backend/count.php");
+        const response = await fetch("http://educonnect.atwebpages.com/educonnect-backend/count.php");
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

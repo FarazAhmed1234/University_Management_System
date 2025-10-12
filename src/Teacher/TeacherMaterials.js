@@ -38,7 +38,7 @@ const TeacherCourseManagement = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
-  const API = process.env.REACT_APP_API_URL || 'http://localhost:8080/educonnect-backend';
+  const API = process.env.REACT_APP_API_URL || 'http://educonnect.atwebpages.com/educonnect-backend';
   const teacher = JSON.parse(localStorage.getItem('teacher'));
   const teacherId = teacher?.teacher_id;
   const userName = teacher?.name;

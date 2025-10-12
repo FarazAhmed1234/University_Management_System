@@ -12,7 +12,7 @@ const StudentCourseManagement = () => {
   const [materials, setMaterials] = useState([]);
   const [isMaterialsLoading, setIsMaterialsLoading] = useState(false);
 
-  const API = 'http://localhost:8080/educonnect-backend';
+  const API = 'http://educonnect.atwebpages.com/educonnect-backend';
 
   // Get student info from local storage
   const student = JSON.parse(localStorage.getItem('student'));

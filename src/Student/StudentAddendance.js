@@ -15,7 +15,7 @@ const StudentAttendance = () => {
   const studentId = student?.student_id;
   const userName = student?.name;
 
-  const API = 'http://localhost:8080/educonnect-backend';
+  const API = 'http://educonnect.atwebpages.com/educonnect-backend';
 
   const fetchAttendance = async () => {
     try {

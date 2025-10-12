@@ -19,7 +19,7 @@ const TeacherCourseManagement = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [activeAssignmentType, setActiveAssignmentType] = useState('Assignments');
 
-  const API = 'http://localhost:8080/educonnect-backend';
+  const API = 'http://educonnect.atwebpages.com/educonnect-backend';
   const teacher = JSON.parse(localStorage.getItem('teacher'));
   const teacherId = teacher?.teacher_id;
   const userName = teacher?.name;

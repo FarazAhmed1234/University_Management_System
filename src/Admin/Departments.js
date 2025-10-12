@@ -23,7 +23,7 @@ const DepartmentManagement = ({ userName, onLogout }) => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:8080/educonnect-backend/getDepartments.php');
+      const response = await fetch('http://educonnect.atwebpages.com/educonnect-backend/getDepartments.php');
       if (!response.ok) throw new Error('Failed to fetch departments');
       
       const contentType = response.headers.get('content-type');
@@ -54,7 +54,7 @@ const DepartmentManagement = ({ userName, onLogout }) => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:8080/educonnect-backend/add_department.php', {
+      const response = await fetch('http://educonnect.atwebpages.com/educonnect-backend/add_department.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newDepartment)
@@ -82,7 +82,7 @@ const DepartmentManagement = ({ userName, onLogout }) => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:8080/educonnect-backend/delete_department.php', {
+      const response = await fetch('http://educonnect.atwebpages.com/educonnect-backend/delete_department.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id })
@@ -122,7 +122,7 @@ const DepartmentManagement = ({ userName, onLogout }) => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:8080/educonnect-backend/update_department_head.php', {
+      const response = await fetch('http://educonnect.atwebpages.com/educonnect-backend/update_department_head.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, head: editHeadValue })

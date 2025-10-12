@@ -8,7 +8,7 @@ const StudentNotices = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const API = 'http://localhost:8080/educonnect-backend';
+  const API = 'http://educonnect.atwebpages.com/educonnect-backend';
   const student = JSON.parse(localStorage.getItem('student'));
   const userName = student?.name;
 

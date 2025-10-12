@@ -6,7 +6,7 @@ import './Result.css';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
-const API = 'http://localhost:8080/educonnect-backend';
+const API = 'http://educonnect.atwebpages.com/educonnect-backend';
 
 const TeacherCourseManagement = () => {
   const [searchTerm, setSearchTerm] = useState('');

@@ -25,7 +25,7 @@ const TeacherTimetable = () => {
 
         try {
             const response = await axios.post(
-                "http://localhost:8080/educonnect-backend/teacher/get_teacher_timetable.php",
+                "http://educonnect.atwebpages.com/educonnect-backend/teacher/get_teacher_timetable.php",
                 { teacher_id: teacherId },
                 { headers: { 'Content-Type': 'application/json' } }
             );

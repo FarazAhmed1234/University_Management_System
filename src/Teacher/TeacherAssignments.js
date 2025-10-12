@@ -25,7 +25,7 @@ const TeacherCourseManagement = () => {
   const [fileError, setFileError] = useState('');
   const [selectedCourse, setSelectedCourse] = useState(null);
 
-  const API = 'http://localhost:8080/educonnect-backend';
+  const API = 'http://educonnect.atwebpages.com/educonnect-backend';
   const teacher = JSON.parse(localStorage.getItem('teacher'));
   const teacherId = teacher?.teacher_id;
   const userName = teacher?.name;

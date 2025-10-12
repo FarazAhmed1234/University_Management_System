@@ -48,7 +48,7 @@ const StudentCourseManagement = () => {
   };
 
   // API base URL
-  const API = process.env.REACT_APP_API_URL || 'http://localhost:8080/educonnect-backend';
+  const API = process.env.REACT_APP_API_URL || 'http://educonnect.atwebpages.com/educonnect-backend';
 
   // Student info
   const student = JSON.parse(localStorage.getItem('student'));

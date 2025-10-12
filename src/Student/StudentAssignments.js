@@ -15,7 +15,7 @@ const StudentAssignments = () => {
   const [submissionSuccess, setSubmissionSuccess] = useState(null);
   const [fileInputKey, setFileInputKey] = useState(Date.now());
 
-  const API = 'http://localhost:8080/educonnect-backend';
+  const API = 'http://educonnect.atwebpages.com/educonnect-backend';
   const student = JSON.parse(localStorage.getItem('student'));
   const studentId = student?.student_id;
   const userName = student?.name;

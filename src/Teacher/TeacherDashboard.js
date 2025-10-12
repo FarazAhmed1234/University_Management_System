@@ -16,7 +16,7 @@ const TeacherDashboard = ({ onLogout }) => {
       setTeacherData(prev => ({ ...prev, name: teacher.name, loading: false }));
       
       // Fetch additional data if needed
-      axios.post("http://localhost/educonnect-backend/teacher/get_teacher_name.php", {
+      axios.post("http://educonnect.atwebpages.com/educonnect-backend/teacher/get_teacher_name.php", {
         teacher_name: teacher.name
       })
       .then(res => {

@@ -30,7 +30,7 @@ const StudentDashboard = ({ onLogout }) => {
 
         // Fallback to API if name not in localStorage
         const response = await axios.post(
-          'http://localhost:8080/educonnect-backend/student/get_student_data.php',
+          'http://educonnect.atwebpages.com/educonnect-backend/student/get_student_data.php',
           { student_id: student.student_id }
         );
 

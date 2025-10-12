@@ -11,7 +11,7 @@ const TeacherLogin = ({ onBack, onLogin }) => {
   const handleLogin = async () => {
     if (email && password) {
       try {
-        const res = await fetch('http://localhost:8080/educonnect-backend/teacher/teacher_login.php', {
+        const res = await fetch('http://educonnect.atwebpages.com/educonnect-backend/teacher/teacher_login.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password }),
