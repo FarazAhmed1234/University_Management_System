@@ -120,10 +120,17 @@ const Register = ({ userName, onLogout }) => {
     }
 
     // Check credit limit (assuming max 17 credits)
-    if (totalCredits + course.credit_hours < 17) {
-      setError('Cannot register - credit limit exceeded (max 17 credits)');
-      return;
-    }
+   
+
+    if (totalCredits + course.credit_hours > 17) {
+  setError('Cannot register - credit limit exceeded (max 17 credits)');
+  return;
+}
+if (course.credit_hours < 1 || course.credit_hours > 3) {
+  setError('Course credit hours must be between 1 and 3');
+  return;
+}
+
 
     // Validate teacher_id exists
     if (!course.teacher_id) {
