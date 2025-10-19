@@ -23,7 +23,7 @@ const CourseManagement = ({ userName, onLogout }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   
-  const API = 'httpshttp://educonnect.atwebpages.com/educonnect-backend';
+  const API = 'http://educonnect.atwebpages.com/educonnect-backend';
 
   // Enhanced fetch function with error handling
   const fetchData = useCallback(async (endpoint) => {
