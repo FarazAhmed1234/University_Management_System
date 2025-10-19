@@ -42,7 +42,7 @@ const UserManagement = ({ userName, onLogout }) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch('http://educonnect.atwebpages.com/educonnect-backend/get_users.php');
+      const response = await fetch('httpshttp://educonnect.atwebpages.com/educonnect-backend/get_users.php');
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const result = await response.json();
       if (!result.success) throw new Error(result.error || 'Failed to fetch users');
@@ -57,7 +57,7 @@ const UserManagement = ({ userName, onLogout }) => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await fetch('http://educonnect.atwebpages.com/educonnect-backend/get_departments.php');
+      const response = await fetch('httpshttp://educonnect.atwebpages.com/educonnect-backend/get_departments.php');
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const result = await response.json();
       if (!result.success) throw new Error(result.error || 'Failed to fetch departments');
@@ -102,7 +102,7 @@ const UserManagement = ({ userName, onLogout }) => {
         }
       });
 
-      const response = await fetch('http://educonnect.atwebpages.com/educonnect-backend/add_user.php', {
+      const response = await fetch('httpshttp://educonnect.atwebpages.com/educonnect-backend/add_user.php', {
         method: 'POST',
         body: formData
       });
@@ -165,7 +165,7 @@ const UserManagement = ({ userName, onLogout }) => {
         formData.append('existing_profile_picture', editUserData.profile_picture);
       }
 
-      const response = await fetch('http://educonnect.atwebpages.com/educonnect-backend/update_user.php', {
+      const response = await fetch('httpshttp://educonnect.atwebpages.com/educonnect-backend/update_user.php', {
         method: 'POST',
         body: formData
       });
@@ -193,7 +193,7 @@ const UserManagement = ({ userName, onLogout }) => {
   const handleDeleteUser = async (id) => {
     if (!window.confirm('Are you sure you want to delete this user?')) return;
     try {
-      const response = await fetch('http://educonnect.atwebpages.com/educonnect-backend/delete_user.php', {
+      const response = await fetch('httpshttp://educonnect.atwebpages.com/educonnect-backend/delete_user.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id })
@@ -242,7 +242,7 @@ const UserManagement = ({ userName, onLogout }) => {
       return <img src={previewImage} alt="Preview" className="profile-pic" />;
     }
     if (user.profile_picture) {
-      return <img src={`http://educonnect.atwebpages.com/educonnect-backend/uploads/${user.profile_picture}`} alt={user.name} className="profile-pic" />;
+      return <img src={`httpshttp://educonnect.atwebpages.com/educonnect-backend/uploads/${user.profile_picture}`} alt={user.name} className="profile-pic" />;
     }
     return <div className="profile-pic default"><User size={24} /></div>;
   };

@@ -54,7 +54,7 @@ const TimetableManagement = ({ userName, onLogout }) => {
   const fetchCourses = async () => {
     try {
       setLoading(prev => ({ ...prev, courses: true }));
-      const response = await fetch('http://educonnect.atwebpages.com/educonnect-backend/fetch_courses.php');
+      const response = await fetch('httpshttp://educonnect.atwebpages.com/educonnect-backend/fetch_courses.php');
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
       if (!data.success) throw new Error(data.message || 'Failed to fetch courses');
@@ -70,7 +70,7 @@ const TimetableManagement = ({ userName, onLogout }) => {
   const fetchTimetableEntries = async () => {
     try {
       setLoading(prev => ({ ...prev, timetable: true }));
-      const response = await fetch('http://educonnect.atwebpages.com/educonnect-backend/get_timetable.php');
+      const response = await fetch('httpshttp://educonnect.atwebpages.com/educonnect-backend/get_timetable.php');
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
       if (!data.success) throw new Error(data.message || 'Failed to fetch timetable');
@@ -117,8 +117,8 @@ const TimetableManagement = ({ userName, onLogout }) => {
 
     try {
       const endpoint = isEditing 
-        ? 'http://educonnect.atwebpages.com/educonnect-backend/update_timetable.php'
-        : 'http://educonnect.atwebpages.com/educonnect-backend/add_timetable.php';
+        ? 'httpshttp://educonnect.atwebpages.com/educonnect-backend/update_timetable.php'
+        : 'httpshttp://educonnect.atwebpages.com/educonnect-backend/add_timetable.php';
       const method = isEditing ? 'PUT' : 'POST';
 
       const response = await fetch(endpoint, {
@@ -143,7 +143,7 @@ const TimetableManagement = ({ userName, onLogout }) => {
   const handleDeleteEntry = async (id) => {
     if (!window.confirm('Are you sure you want to delete this timetable entry?')) return;
     try {
-      const response = await fetch('http://educonnect.atwebpages.com/educonnect-backend/delete_timetable.php', {
+      const response = await fetch('httpshttp://educonnect.atwebpages.com/educonnect-backend/delete_timetable.php', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({ id })

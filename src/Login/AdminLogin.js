@@ -11,7 +11,7 @@ const AdminLogin = ({ onBack, onLogin }) => {
   const handleSubmit = async () => {
     if (email && password) {
       try {
-        const response = await fetch('http://educonnect.atwebpages.com/educonnect-backend/admin_login.php', {
+        const response = await fetch('httpshttp://educonnect.atwebpages.com/educonnect-backend/admin_login.php', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

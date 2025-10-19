@@ -26,7 +26,7 @@ const NoticeManagement = ({ userName, onLogout }) => {
   const fetchNotices = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://educonnect.atwebpages.com/educonnect-backend/get_notices.php');
+      const response = await fetch('httpshttp://educonnect.atwebpages.com/educonnect-backend/get_notices.php');
       const result = await response.json();
       if (!result.success) throw new Error(result.message);
       setNotices(result.data);
@@ -39,7 +39,7 @@ const NoticeManagement = ({ userName, onLogout }) => {
 
   const handleAddNotice = async () => {
     try {
-      const response = await fetch('http://educonnect.atwebpages.com/educonnect-backend/add_notice.php', {
+      const response = await fetch('httpshttp://educonnect.atwebpages.com/educonnect-backend/add_notice.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newNotice)
@@ -63,7 +63,7 @@ const NoticeManagement = ({ userName, onLogout }) => {
 
   const handleUpdateNotice = async () => {
     try {
-      const response = await fetch('http://educonnect.atwebpages.com/educonnect-backend/update_notice.php', {
+      const response = await fetch('httpshttp://educonnect.atwebpages.com/educonnect-backend/update_notice.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editingNotice)
@@ -81,7 +81,7 @@ const NoticeManagement = ({ userName, onLogout }) => {
     if (!window.confirm('Are you sure you want to delete this notice?')) return;
     
     try {
-      const response = await fetch('http://educonnect.atwebpages.com/educonnect-backend/delete_notice.php', {
+      const response = await fetch('httpshttp://educonnect.atwebpages.com/educonnect-backend/delete_notice.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id })
