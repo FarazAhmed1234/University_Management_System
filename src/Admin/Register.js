@@ -37,7 +37,7 @@ const Register = ({ userName, onLogout }) => {
 
     try {
       const response = await fetch(
-        `httpshttp://educonnect.atwebpages.com/educonnect-backend/get_student.php?student_id=${studentId}`
+        `http://educonnect.atwebpages.com/educonnect-backend/get_student.php?student_id=${studentId}`
       );
       const data = await response.json();
 
@@ -64,7 +64,7 @@ const Register = ({ userName, onLogout }) => {
 
     try {
       const response = await fetch(
-        `httpshttp://educonnect.atwebpages.com/educonnect-backend/get_semester.php?student_id=${studentId}&semester=${semester}`
+        `http://educonnect.atwebpages.com/educonnect-backend/get_semester.php?student_id=${studentId}&semester=${semester}`
       );
       const data = await response.json();
 
@@ -89,7 +89,7 @@ const Register = ({ userName, onLogout }) => {
 
     try {
       const response = await fetch(
-        `httpshttp://educonnect.atwebpages.com/educonnect-backend/get_registered_courses.php?student_id=${studentId}&semester=${semester}`
+        `http://educonnect.atwebpages.com/educonnect-backend/get_registered_courses.php?student_id=${studentId}&semester=${semester}`
       );
       const data = await response.json();
 
@@ -137,7 +137,7 @@ const Register = ({ userName, onLogout }) => {
 
     try {
       const response = await fetch(
-        'httpshttp://educonnect.atwebpages.com/educonnect-backend/register_course.php',
+        'http://educonnect.atwebpages.com/educonnect-backend/register_course.php',
         {
           method: 'POST',
           headers: {
