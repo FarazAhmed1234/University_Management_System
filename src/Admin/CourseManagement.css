@@ -229,13 +229,7 @@ body {
   background-color: rgba(231, 76, 60, 0.1);
 }
 
-.icon-btn--confirm {
-  color: var(--secondary-color);
-}
 
-.icon-btn--confirm:hover {
-  background-color: rgba(46, 204, 113, 0.1);
-}
 
 .icon-btn--cancel {
   color: var(--gray-color);
